@@ -34,7 +34,7 @@ func main() {
 		m -= 2 // nonconsecutive
 	}
 
-	// Check the digits
+	// Check the digits, print them, and sum them
 	var sum uint64
 	spacer := ""
 	for i := range digits {
@@ -48,6 +48,8 @@ func main() {
 	}
 }
 
+// fibonacciNumbers returns a slice of uint64 numbers,
+// the fibonacci numbers less than argument n
 func fibonacciNumbers(n uint64) []uint64 {
 	ary := make([]uint64, 2)
 	ary[0] = 1
