@@ -42,7 +42,7 @@ func main() {
 		sum += digits[i]
 		spacer = ", "
 	}
-	fmt.Printf(" = %d\n", sum)
+	fmt.Printf("\nsum %d\n", sum)
 	if sum != n {
 		fmt.Print("Something's wrong")
 	}
