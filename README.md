@@ -70,3 +70,7 @@ I got one more Fibonacci number out of the loop,
 I did not change the loop end condition on line 19.
 For `uint64`, the overflow is to a smaller _positive_ value.
 I thought this was interesting.
+
+The next Fibonacci Number after 12200160415121876738 is 19740274219868223167,
+which users of Linux' `bc` arbitrary precision calculator can easily find.
+That Fibonacci Number is greater than 2<sup>64</sup> or 18446744073709551615
