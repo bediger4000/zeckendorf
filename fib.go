@@ -9,11 +9,12 @@ func main() {
 }
 
 // fibonacciNumbers prints fibonacci numbers
-// up to what an int holds
+// up to what a uint64 holds
 func fibonacciNumbers() {
-	x := 1
-	y := 1
-	fmt.Printf("1\n1\n")
+	var x uint64
+	var y uint64
+	x, y = 1, 1
+	fmt.Printf("1,\n1,\n")
 
 	for {
 		nxt := x + y
