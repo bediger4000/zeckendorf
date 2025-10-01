@@ -8,6 +8,72 @@ import (
 	"strings"
 )
 
+func main() {
+	n, err := strconv.ParseUint(os.Args[1], 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	idx := maxIndex(n)
+
+	indexes := digits(n, idx)
+
+	var fdigits []string
+	j := 0
+
+	for i := indexes[0]; i >= 0; i-- {
+		if j < len(indexes) && i == indexes[j] {
+			fdigits = append(fdigits, "1")
+			j++
+			continue
+		}
+		fdigits = append(fdigits, "0")
+	}
+
+	reversed := make([]string, len(fdigits))
+	for i, j := 0, len(fdigits)-1; i < len(fdigits); i, j = i+1, j-1 {
+		reversed[i] = fdigits[j]
+	}
+
+	fmt.Printf("%s1\n", strings.Join(reversed, ""))
+}
+
+func digits(n uint64, idx int) []int {
+	indexes := make([]int, 1)
+	indexes[0] = idx
+	sum := fibonacciNumber[idx]
+	remainder := n - fibonacciNumber[idx]
+	idx -= 2
+
+	for remainder > 0 {
+		if fibonacciNumber[idx] > remainder {
+			idx--
+			continue
+		}
+		remainder -= fibonacciNumber[idx]
+		indexes = append(indexes, idx)
+		sum += fibonacciNumber[idx]
+		idx -= 2
+	}
+	if sum != n {
+		fmt.Fprintf(os.Stderr, "sum %d != n %d\n", sum, n)
+	}
+	return indexes
+}
+
+func maxIndex(n uint64) int {
+	var idx int
+
+	for idx = 0; idx <= fibonacciNumberMax; idx++ {
+		if n < fibonacciNumber[idx] {
+			idx--
+			break
+		}
+	}
+
+	return idx
+}
+
 var fibonacciNumber = []uint64{
 	//	1,
 	1,
@@ -103,69 +169,3 @@ var fibonacciNumber = []uint64{
 	7540113804746346429,
 }
 var fibonacciNumberMax = len(fibonacciNumber)
-
-func main() {
-	n, err := strconv.ParseUint(os.Args[1], 10, 64)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	idx := maxIndex(n)
-
-	indexes := digits(n, idx)
-
-	var fdigits []string
-	j := 0
-
-	for i := indexes[0]; i >= 0; i-- {
-		if j < len(indexes) && i == indexes[j] {
-			fdigits = append(fdigits, "1")
-			j++
-			continue
-		}
-		fdigits = append(fdigits, "0")
-	}
-
-	reversed := make([]string, len(fdigits))
-	for i, j := 0, len(fdigits)-1; i < len(fdigits); i, j = i+1, j-1 {
-		reversed[i] = fdigits[j]
-	}
-
-	fmt.Printf("%s1\n", strings.Join(reversed, ""))
-}
-
-func digits(n uint64, idx int) []int {
-	indexes := make([]int, 1)
-	indexes[0] = idx
-	sum := fibonacciNumber[idx]
-	remainder := n - fibonacciNumber[idx]
-	idx -= 2
-
-	for remainder > 0 {
-		if fibonacciNumber[idx] > remainder {
-			idx--
-			continue
-		}
-		remainder -= fibonacciNumber[idx]
-		indexes = append(indexes, idx)
-		sum += fibonacciNumber[idx]
-		idx -= 2
-	}
-	if sum != n {
-		fmt.Fprintf(os.Stderr, "sum %d != n %d\n", sum, n)
-	}
-	return indexes
-}
-
-func maxIndex(n uint64) int {
-	var idx int
-
-	for idx = 0; idx <= fibonacciNumberMax; idx++ {
-		if n < fibonacciNumber[idx] {
-			idx--
-			break
-		}
-	}
-
-	return idx
-}
