@@ -4,15 +4,30 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	n, err := strconv.ParseUint(os.Args[1], 10, 64)
-	if err != nil {
-		log.Fatal(err)
+	if len(os.Args) < 2 {
+		usage()
+		return
 	}
+
+	for _, str := range os.Args[1:] {
+		n, err := strconv.ParseUint(str, 10, 64)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		encoded := encode(n)
+
+		fmt.Printf("%d\t%s\n", n, encoded)
+	}
+}
+
+func encode(n uint64) string {
 
 	idx := maxIndex(n)
 
@@ -35,7 +50,7 @@ func main() {
 		reversed[i] = fdigits[j]
 	}
 
-	fmt.Printf("%s1\n", strings.Join(reversed, ""))
+	return fmt.Sprintf("%s1", strings.Join(reversed, ""))
 }
 
 func digits(n uint64, idx int) []int {
@@ -72,6 +87,11 @@ func maxIndex(n uint64) int {
 	}
 
 	return idx
+}
+
+func usage() {
+	fmt.Printf("%s: calculate Fibonacci Encoding of integers\n", filepath.Base(os.Args[0]))
+	fmt.Printf("Usage: %s [number [number ...]]\n", filepath.Base(os.Args[0]))
 }
 
 var fibonacciNumber = []uint64{
