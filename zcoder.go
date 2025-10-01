@@ -53,7 +53,15 @@ func encode(n uint64) string {
 	return fmt.Sprintf("%s1", strings.Join(reversed, ""))
 }
 
+// digits returns a slice of the indexes into
+// slice fibonacciNumber. The values of slice
+// ffibonacciNumber at those indexes is the
+// Zeckendorf representation of formal argument
+// n. Formal argument idx is the index of the
+// fibonacci number equal to n, or the index of
+// the largest fibonacci number less than n.
 func digits(n uint64, idx int) []int {
+
 	indexes := make([]int, 1)
 	indexes[0] = idx
 	sum := fibonacciNumber[idx]
@@ -76,6 +84,9 @@ func digits(n uint64, idx int) []int {
 	return indexes
 }
 
+// maxIndex finds the index into slice fibonacciNumber
+// of the fibonacci number less than or equal to the
+// formal argument n
 func maxIndex(n uint64) int {
 	var idx int
 
@@ -94,6 +105,10 @@ func usage() {
 	fmt.Printf("Usage: %s [number [number ...]]\n", filepath.Base(os.Args[0]))
 }
 
+// fibonacciNumber holds precalculated fibonacci numbers in order.
+// Notice the first 1 is left off. Zeckendorf representation of a number
+// never uses 2 consecutive fibonacci numbers, so that final 1 never
+// appears in a Zeckendorf representation.
 var fibonacciNumber = []uint64{
 	//	1,
 	1,
