@@ -31,6 +31,17 @@ Zeckendorf Representation is closely related to
 > Zeckendorf representation with the order of its digits reversed and an
 > additional "1" appended to the end. 
 
+To understand this, I wrote a program to perform calculate Fibonacci Codes
+for positive integers.
+
+```
+$ go build zcoder.go
+$ ./zcoder 100 101 102
+100     00101000011
+101     10101000011
+102     00000100011
+```
+
 ## Fibonacci Numbers
 
 To do the Fibonacci Coding, I used a slice literal.
