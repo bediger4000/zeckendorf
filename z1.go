@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		usage()
+		return
+	}
+
 	n, err := strconv.ParseUint(os.Args[1], 10, 64)
 	if err != nil {
 		log.Fatal(err)
@@ -64,4 +70,10 @@ func fibonacciNumbers(n uint64) []uint64 {
 	}
 
 	return ary
+}
+
+func usage() {
+	fmt.Printf("%s: calculate Zeckendorf representation of an integer\n", filepath.Base(os.Args[0]))
+	fmt.Printf("Usage: %s <number>\n", filepath.Base(os.Args[0]))
+	fmt.Printf("Output is a comman separated list of Fibonacci Numbers, and their sum on stdout\n")
 }
