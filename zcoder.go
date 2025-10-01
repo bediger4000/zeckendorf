@@ -33,24 +33,21 @@ func encode(n uint64) string {
 
 	indexes := digits(n, idx)
 
-	var fdigits []string
+	max := indexes[0]
+
+	fdigits := make([]string, max+1, max+1)
 	j := 0
 
 	for i := indexes[0]; i >= 0; i-- {
 		if j < len(indexes) && i == indexes[j] {
-			fdigits = append(fdigits, "1")
+			fdigits[i] = "1"
 			j++
 			continue
 		}
-		fdigits = append(fdigits, "0")
+		fdigits[i] = "0"
 	}
 
-	reversed := make([]string, len(fdigits))
-	for i, j := 0, len(fdigits)-1; i < len(fdigits); i, j = i+1, j-1 {
-		reversed[i] = fdigits[j]
-	}
-
-	return fmt.Sprintf("%s1", strings.Join(reversed, ""))
+	return fmt.Sprintf("%s1", strings.Join(fdigits, ""))
 }
 
 // digits returns a slice of the indexes into
