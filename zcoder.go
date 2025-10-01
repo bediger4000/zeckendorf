@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 )
 
 func main() {
@@ -35,19 +34,21 @@ func encode(n uint64) string {
 
 	max := indexes[0]
 
-	fdigits := make([]string, max+1, max+1)
+	fdigits := make([]rune, max+2, max+2)
 	j := 0
 
 	for i := indexes[0]; i >= 0; i-- {
 		if j < len(indexes) && i == indexes[j] {
-			fdigits[i] = "1"
+			fdigits[i] = '1'
 			j++
 			continue
 		}
-		fdigits[i] = "0"
+		fdigits[i] = '0'
 	}
 
-	return fmt.Sprintf("%s1", strings.Join(fdigits, ""))
+	fdigits[max+1] = '1'
+
+	return string(fdigits)
 }
 
 // digits returns a slice of the indexes into
