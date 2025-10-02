@@ -42,9 +42,18 @@ $ ./zcoder 100 101 102
 102     00000100011
 ```
 
+### Decoding
+
+The specific useful property that the Wikipedia page lists
+for Fibonacci Encoding is "self syncronization".
+
+> With Fibonacci coding, ... a changed bit may cause one token to be read as
+> two, or cause two tokens to be read incorrectly as one, but reading a "0"
+> from the stream will stop the errors from propagating further. 
+
 ## Fibonacci Numbers
 
-To do the Fibonacci Coding, I used a slice literal.
+To calculate Zeckendorf representations, I used a slice literal.
 To find values for the literal,
 I used this iterative method of calculating Fibonacci numbers.
 
