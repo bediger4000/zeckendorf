@@ -60,21 +60,19 @@ func encode(n uint64) string {
 // the largest fibonacci number less than n.
 func digits(n uint64, idx int) []int {
 
-	indexes := make([]int, 1)
-	indexes[0] = idx
-	sum := fibonacciNumber[idx]
-	remainder := n - fibonacciNumber[idx]
-	idx -= 2
+	var indexes []int
+	var sum uint64
+	remainder := n
 
-	for remainder > 0 {
-		if fibonacciNumber[idx] > remainder {
-			idx--
+	for i := idx; i >= 0; {
+		if remainder >= fibonacciNumber[i] {
+			remainder -= fibonacciNumber[i]
+			indexes = append(indexes, i)
+			sum += fibonacciNumber[i]
+			i -= 2
 			continue
 		}
-		remainder -= fibonacciNumber[idx]
-		indexes = append(indexes, idx)
-		sum += fibonacciNumber[idx]
-		idx -= 2
+		i--
 	}
 	if sum != n {
 		fmt.Fprintf(os.Stderr, "sum %d != n %d\n", sum, n)
@@ -88,9 +86,8 @@ func digits(n uint64, idx int) []int {
 func maxIndex(n uint64) int {
 	var idx int
 
-	for idx = 0; idx <= fibonacciNumberMax; idx++ {
-		if n < fibonacciNumber[idx] {
-			idx--
+	for idx = fibonacciNumberMax - 1; idx >= 0 && fibonacciNumber[idx] > n; idx-- {
+		if n == fibonacciNumber[idx] {
 			break
 		}
 	}
