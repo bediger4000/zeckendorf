@@ -19,7 +19,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// fibs has Fibonacci less than or equal to n
+	// fibs contains some Fibonacci numbers less than or equal to n
 	fibs := fibonacciNumbers(n)
 
 	// The non-conseuctive fibonacci numbers that sum to n
@@ -40,7 +40,7 @@ func main() {
 		m -= 2 // nonconsecutive
 	}
 
-	// Check the digits, print them, and sum them
+	// Print the digits, and sum them.
 	var sum uint64
 	spacer := ""
 	for i := range digits {
