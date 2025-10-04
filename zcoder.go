@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -9,20 +10,27 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		usage()
-		return
-	}
+	flag.Usage = usage
+	streamEncoded := flag.Bool("e", false, "stream encoded numbers")
+	// streamCount := flag.Int("n", 4, "produce this many encoded, random numbers")
+	flag.Parse()
 
-	for _, str := range os.Args[1:] {
-		n, err := strconv.ParseUint(str, 10, 64)
+	nargs := flag.NArg()
+
+	for i := 0; i < nargs; i++ {
+
+		n, err := strconv.ParseUint(flag.Arg(i), 10, 64)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		encoded := encode(n)
 
-		fmt.Printf("%d\t%s\n", n, encoded)
+		if *streamEncoded {
+			fmt.Printf("%s", encoded)
+		} else {
+			fmt.Printf("%d\t%s\n", n, encoded)
+		}
 	}
 }
 
@@ -97,7 +105,8 @@ func maxIndex(n uint64) int {
 
 func usage() {
 	fmt.Printf("%s: calculate Fibonacci Encoding of integers\n", filepath.Base(os.Args[0]))
-	fmt.Printf("Usage: %s [number [number ...]]\n", filepath.Base(os.Args[0]))
+	fmt.Printf("Usage: %s [-e] number [number [number ...]]\n", filepath.Base(os.Args[0]))
+	fmt.Printf("flag -e - stream concatenated, encoded numbers on stdout\n")
 }
 
 // fibonacciNumber holds precalculated fibonacci numbers in order.
