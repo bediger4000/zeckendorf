@@ -51,6 +51,40 @@ for Fibonacci Encoding is "self syncronization".
 > two, or cause two tokens to be read incorrectly as one, but reading a "0"
 > from the stream will stop the errors from propagating further. 
 
+To try out decoding, I wrote two more programs:
+
+1. a streaming fibonacci *decoder*
+2. a program to introduce errors to a stream of '1' and '0' characters.
+This program randomly flips a character from '1' to '0' (or vice versa),
+deletes a character from the stream,
+or inserts a '1' or a '0'.
+The probabilities are coded in.
+Changing them requires editing `changer.go` and re-compiling.
+
+```
+$ go build dzcoder.go
+$ go build changer.go
+$ ./zcoder -e 10 99 12 313 | ./changer | ./dzcoder
+0
+1
+37
+7
+2
+73
+$ ./zcoder -e 10 99 12 313 | ./dzcoder
+
+10
+99
+12
+313
+```
+
+It's pretty easy to write a streaming decoder for Fibonacci Encoding.
+The code does have to have a boolean that denotes "last character was a '1'",
+and code to write out a decoded number when it finds two consecutive '1' characters.
+There's no extra code involved to re-synchronize if/when it encounters
+a damaged stream.
+
 ## Fibonacci Numbers
 
 To calculate Zeckendorf representations, I used a slice literal.
