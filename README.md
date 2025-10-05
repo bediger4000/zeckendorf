@@ -110,6 +110,10 @@ I used this iterative method of calculating Fibonacci numbers.
 16	}
 ```
 
+On line 9, the condition will turn false when the value of `x + y`
+overflows a 64-bit register.
+That is, the loop terminates when a deliberate integer overflow happens.
+
 For my first attempt, variables `x` and `y` had type `int`.
 The function printed 92 numbers, beginning with 1, 1, ...
 and ending with 4660046610375530309, 7540113804746346429
